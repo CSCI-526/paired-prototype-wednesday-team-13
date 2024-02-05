@@ -2577,10 +2577,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player_speed: 10
-  jumpTime: 0.4
+  jumpTime: 0.1
   jump_height: 5
-  fallMultiplier: 1.5
-  jumpMultiplier: 3
+  fallMultiplier: 5
+  jumpMultiplier: 5
   groundCheck: {fileID: 759061051}
   groundLayer:
     serializedVersion: 2
@@ -3645,10 +3645,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player_speed: 10
-  jumpTime: 0.4
+  jumpTime: 0.1
   jump_height: 5
-  fallMultiplier: 1.5
-  jumpMultiplier: 3
+  fallMultiplier: 5
+  jumpMultiplier: 5
   groundCheck: {fileID: 759919155}
   groundLayer:
     serializedVersion: 2
