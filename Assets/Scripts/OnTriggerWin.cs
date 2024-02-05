@@ -14,7 +14,7 @@ public class OnTriggerWin : MonoBehaviour
             if (this.gameObject.name == "Player1" || this.gameObject.name == "Player2")
             {
                 WinText.gameObject.SetActive(true); 
-                //Time.timeScale = 0;
+                Time.timeScale = 0;
 
             }
         }
