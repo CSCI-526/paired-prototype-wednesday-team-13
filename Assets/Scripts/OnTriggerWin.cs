@@ -15,7 +15,7 @@ public class OnTriggerWin : MonoBehaviour
             {
                 WinText.gameObject.SetActive(true); 
                 Time.timeScale = 0;
-
+                
             }
         }
     }
