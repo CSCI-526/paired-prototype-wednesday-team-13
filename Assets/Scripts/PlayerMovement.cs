@@ -48,12 +48,6 @@ public class PlayerMovement : MonoBehaviour
         originalGrav = rb.gravityScale;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
 
     public void Jump(InputAction.CallbackContext value)
     {
@@ -106,17 +100,13 @@ public class PlayerMovement : MonoBehaviour
     public void Dash(InputAction.CallbackContext value)
     {
        
-        if (value.started && canDash)
+        if (value.performed && canDash)
         {
             if(waitTime >= dashingCooldown)
             {
                 waitTime = 0;
                 Invoke("Dash", 0);
             }
-        }
-        if (value.canceled)
-        {
-            Invoke("StopDash", dashingTime);
         }
 
 
@@ -192,7 +182,8 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.velocity = new Vector2(vecMove.x * dashingSpeed, 0);
         }
-        
+        Invoke("StopDash", dashingTime);
+
     }
 
     public void StopDash()
