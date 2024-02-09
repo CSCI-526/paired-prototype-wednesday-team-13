@@ -51,16 +51,16 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext value)
     {
-        
+
         if (value.started)
         {
-            if(gameObject.name == "Player2" && isGrounded())
+            if (gameObject.name == "Player2" && isGrounded())
             {
                 rb.velocity = new Vector2(rb.velocity.x, jump_height);
                 isJumping = true;
                 jumpCounter = 0;
             }
-            if(gameObject.name == "Player1")
+            if (gameObject.name == "Player1")
             {
                 if (isGrounded())
                 {
@@ -76,12 +76,12 @@ public class PlayerMovement : MonoBehaviour
                     jumpCounter = 0;
                 }
             }
-            
+
         }
         if (value.canceled)
         {
             isJumping = false;
-            if(isGrounded()) jumpCounter = 0;
+            if (isGrounded()) jumpCounter = 0;
 
             if (rb.velocity.y > 0)
             {
@@ -99,10 +99,10 @@ public class PlayerMovement : MonoBehaviour
 
     public void Dash(InputAction.CallbackContext value)
     {
-       
+
         if (value.performed && canDash)
         {
-            if(waitTime >= dashingCooldown)
+            if (waitTime >= dashingCooldown)
             {
                 waitTime = 0;
                 Invoke("Dash", 0);
@@ -128,7 +128,7 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
         rb.velocity = new Vector2(vecMove.x * player_speed, rb.velocity.y);
-        if (rb.velocity.y < 0)
+        if (rb.velocity.y < 0 && !isGrounded())
         {
             rb.velocity -= vecGravity * fallMultiplier * Time.deltaTime;
         }
@@ -157,7 +157,7 @@ public class PlayerMovement : MonoBehaviour
 
     bool isGrounded()
     {
-        return Physics2D.OverlapCapsule(groundCheck.position, new Vector2(1.0f, 0.1f), CapsuleDirection2D.Horizontal, 0, groundLayer);
+        return Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer);
     }
 
     public void Dash()
@@ -167,7 +167,7 @@ public class PlayerMovement : MonoBehaviour
         dashTrail.emitting = true;
         rb.gravityScale = dashGrav;
 
-        if(vecMove.x == 0)
+        if (vecMove.x == 0)
         {
             if (isFacingRight)
             {
