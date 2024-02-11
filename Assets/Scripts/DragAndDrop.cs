@@ -2,36 +2,50 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DragAndDrop : MonoBehaviour
+public class DragAndDrop: MonoBehaviour
 {
-    private float offsetX;
-    private float offsetY;
-    private bool isBeingDragged = false;
+    Vector3 offset;
+    Collider2D collider2d;
+    public string destinationTag = "DropArea";
+    bool isDraggable = true;
 
-    private void OnMouseDown()
+    void Awake()
     {
-        if (Input.GetMouseButtonDown(0))
+        collider2d = GetComponent<Collider2D>();
+    }
+
+    void OnMouseDown()
+    {
+        if (isDraggable)
+            offset = transform.position - MouseWorldPosition();
+    }
+
+    void OnMouseDrag()
+    {
+        if (isDraggable)
+            transform.position = MouseWorldPosition() + offset;
+    }
+
+    void OnMouseUp()
+    {
+        if (isDraggable)
         {
-            isBeingDragged = true;
+            var rayOrigin = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            var hitInfo = Physics2D.Raycast(rayOrigin, Vector2.zero);
 
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            if (hitInfo.collider != null && hitInfo.transform.CompareTag(destinationTag))
+            {
+                transform.position = hitInfo.point;
 
-            offsetX = mousePosition.x - transform.localPosition.x;
-            offsetY = mousePosition.y - transform.localPosition.y;
+            }
+            isDraggable = false;
         }
     }
 
-    private void OnMouseUp() 
+    Vector3 MouseWorldPosition()
     {
-        isBeingDragged = false;
-    }
-
-    private void Update()
-    {
-        if (isBeingDragged)
-        {
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            transform.position = new Vector3(mousePosition.x - offsetY, mousePosition.y - offsetY, 0);
-        }
+        var mouseScreenPos = Input.mousePosition;
+        mouseScreenPos.z = Camera.main.WorldToScreenPoint(transform.position).z;
+        return Camera.main.ScreenToWorldPoint(mouseScreenPos);
     }
 }
