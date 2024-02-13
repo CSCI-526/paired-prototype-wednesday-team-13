@@ -128,6 +128,11 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
         rb.velocity = new Vector2(vecMove.x * player_speed, rb.velocity.y);
+        ApplyJumpPhysics();
+    }
+
+    private void ApplyJumpPhysics()
+    {
         if (rb.velocity.y < 0 && !isGrounded())
         {
             rb.velocity -= vecGravity * fallMultiplier * Time.deltaTime;
