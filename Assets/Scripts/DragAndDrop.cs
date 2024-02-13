@@ -42,6 +42,13 @@ public class DragAndDrop: MonoBehaviour
         }
     }
 
+    void deactiveDrag()
+    { 
+        
+       isDraggable = false;
+        
+    }
+
     Vector3 MouseWorldPosition()
     {
         var mouseScreenPos = Input.mousePosition;
