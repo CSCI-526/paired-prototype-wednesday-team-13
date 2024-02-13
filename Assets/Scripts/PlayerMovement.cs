@@ -71,7 +71,7 @@ public class PlayerMovement : MonoBehaviour
                 }
                 else if (doubleJump)
                 {
-                    rb.velocity = new Vector2(rb.velocity.x, jump_height * 0.7f);
+                    rb.velocity = new Vector2(rb.velocity.x, jump_height);
                     doubleJump = false;
                     jumpCounter = 0;
                 }
